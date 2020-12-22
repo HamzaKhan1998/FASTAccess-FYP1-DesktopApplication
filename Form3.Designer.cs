@@ -83,6 +83,8 @@
             this.comboBox12 = new System.Windows.Forms.ComboBox();
             this.coursecomboBox13 = new System.Windows.Forms.ComboBox();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.Select_Excel = new ePOSOne.btnProduct.Button_WOC();
             this.button_WOC10 = new ePOSOne.btnProduct.Button_WOC();
             this.button_WOC9 = new ePOSOne.btnProduct.Button_WOC();
             this.RemoveCourse = new ePOSOne.btnProduct.Button_WOC();
@@ -103,6 +105,8 @@
             this.button_WOC8 = new ePOSOne.btnProduct.Button_WOC();
             this.AddCourse = new ePOSOne.btnProduct.Button_WOC();
             this.button_WOC4 = new ePOSOne.btnProduct.Button_WOC();
+            this.button_WOC11 = new ePOSOne.btnProduct.Button_WOC();
+            this.button_WOC12 = new ePOSOne.btnProduct.Button_WOC();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -180,7 +184,7 @@
             // updateTeachersToolStripMenuItem
             // 
             this.updateTeachersToolStripMenuItem.Name = "updateTeachersToolStripMenuItem";
-            this.updateTeachersToolStripMenuItem.Size = new System.Drawing.Size(106, 20);
+            this.updateTeachersToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
             this.updateTeachersToolStripMenuItem.Text = "Update Teachers";
             this.updateTeachersToolStripMenuItem.Click += new System.EventHandler(this.updateTeachersToolStripMenuItem_Click);
             // 
@@ -631,6 +635,34 @@
             this.comboBox9.TabIndex = 135;
             this.comboBox9.Text = "Consecutive/Non Consecutive";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(-15, -15);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 137;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // Select_Excel
+            // 
+            this.Select_Excel.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.Select_Excel.ButtonColor = System.Drawing.Color.RoyalBlue;
+            this.Select_Excel.FlatAppearance.BorderSize = 0;
+            this.Select_Excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Select_Excel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Select_Excel.Location = new System.Drawing.Point(643, 453);
+            this.Select_Excel.Name = "Select_Excel";
+            this.Select_Excel.OnHoverBorderColor = System.Drawing.Color.Aqua;
+            this.Select_Excel.OnHoverButtonColor = System.Drawing.Color.Aqua;
+            this.Select_Excel.OnHoverTextColor = System.Drawing.Color.Black;
+            this.Select_Excel.Size = new System.Drawing.Size(236, 35);
+            this.Select_Excel.TabIndex = 140;
+            this.Select_Excel.Text = "Import Previous (.xls)";
+            this.Select_Excel.TextColor = System.Drawing.Color.White;
+            this.Select_Excel.UseVisualStyleBackColor = true;
+            this.Select_Excel.Click += new System.EventHandler(this.button_WOC12_Click);
+            // 
             // button_WOC10
             // 
             this.button_WOC10.BorderColor = System.Drawing.Color.RoyalBlue;
@@ -1014,12 +1046,54 @@
             this.button_WOC4.UseVisualStyleBackColor = true;
             this.button_WOC4.Click += new System.EventHandler(this.button_WOC4_Click);
             // 
+            // button_WOC11
+            // 
+            this.button_WOC11.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.button_WOC11.ButtonColor = System.Drawing.Color.RoyalBlue;
+            this.button_WOC11.FlatAppearance.BorderSize = 0;
+            this.button_WOC11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_WOC11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_WOC11.Location = new System.Drawing.Point(643, 494);
+            this.button_WOC11.Name = "button_WOC11";
+            this.button_WOC11.OnHoverBorderColor = System.Drawing.Color.Aqua;
+            this.button_WOC11.OnHoverButtonColor = System.Drawing.Color.Aqua;
+            this.button_WOC11.OnHoverTextColor = System.Drawing.Color.Black;
+            this.button_WOC11.Size = new System.Drawing.Size(236, 35);
+            this.button_WOC11.TabIndex = 141;
+            this.button_WOC11.Text = "Export (.xls)";
+            this.button_WOC11.TextColor = System.Drawing.Color.White;
+            this.button_WOC11.UseVisualStyleBackColor = true;
+            this.button_WOC11.Click += new System.EventHandler(this.button_WOC11_Click);
+            // 
+            // button_WOC12
+            // 
+            this.button_WOC12.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.button_WOC12.ButtonColor = System.Drawing.Color.RoyalBlue;
+            this.button_WOC12.FlatAppearance.BorderSize = 0;
+            this.button_WOC12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_WOC12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_WOC12.Location = new System.Drawing.Point(643, 412);
+            this.button_WOC12.Name = "button_WOC12";
+            this.button_WOC12.OnHoverBorderColor = System.Drawing.Color.Aqua;
+            this.button_WOC12.OnHoverButtonColor = System.Drawing.Color.Aqua;
+            this.button_WOC12.OnHoverTextColor = System.Drawing.Color.Black;
+            this.button_WOC12.Size = new System.Drawing.Size(236, 35);
+            this.button_WOC12.TabIndex = 142;
+            this.button_WOC12.Text = "Upload To Firebase";
+            this.button_WOC12.TextColor = System.Drawing.Color.White;
+            this.button_WOC12.UseVisualStyleBackColor = true;
+            this.button_WOC12.Click += new System.EventHandler(this.button_WOC12_Click_1);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(900, 552);
+            this.Controls.Add(this.button_WOC12);
+            this.Controls.Add(this.button_WOC11);
+            this.Controls.Add(this.Select_Excel);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button_WOC10);
             this.Controls.Add(this.comboBox9);
             this.Controls.Add(this.button_WOC9);
@@ -1183,5 +1257,9 @@
         private ePOSOne.btnProduct.Button_WOC button_WOC9;
         private System.Windows.Forms.ComboBox comboBox9;
         private ePOSOne.btnProduct.Button_WOC button_WOC10;
+        private System.Windows.Forms.Button button1;
+        private ePOSOne.btnProduct.Button_WOC Select_Excel;
+        private ePOSOne.btnProduct.Button_WOC button_WOC11;
+        private ePOSOne.btnProduct.Button_WOC button_WOC12;
     }
 }

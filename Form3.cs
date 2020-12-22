@@ -15,7 +15,14 @@ using Microsoft.Scripting.Hosting;
 using System.Data.SQLite;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
-
+using Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+using DataTable = System.Data.DataTable;
+using TextBox = System.Windows.Forms.TextBox;
+using System.IO;
+using OfficeOpenXml;
+using ClosedXML.Excel;
+using System.Collections;
 
 namespace FAST_Access
 {
@@ -74,6 +81,7 @@ namespace FAST_Access
         private DataTable DT2 = new DataTable();
         private DataTable DT3 = new DataTable();
         private DataTable DT4 = new DataTable();
+        private IEnumerable<object> activities;
 
         public void SetConnection()
         {
@@ -561,14 +569,18 @@ namespace FAST_Access
         {
             //do the code when bgv completes its work
         }
+
+
         private void button_WOC1_Click_1(object sender, EventArgs e)
         {
+
+
             progressBar1.Show();
             var py = Python.CreateEngine();
             ICollection<string> searchPaths = py.GetSearchPaths();
-            searchPaths.Add("C:\\Users\\Hamza\\Desktop\\Lib");
+            searchPaths.Add("C:\\Users\\ubaid\\PycharmProjects\\pythonProject\\venv\\Lib\\site-packages\\prettytable");
             py.SetSearchPaths(searchPaths);
-            py.ExecuteFile("C:\\Users\\Hamza\\.PyCharmCE2019.3\\config\\scratches\\Main Algo 1.py");
+            py.ExecuteFile("C:\\Users\\ubaid\\PycharmProjects\\pythonProject\\main.py");
             MessageBox.Show("Please wait while the time-table is being generated");
             bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
             bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
@@ -622,6 +634,9 @@ namespace FAST_Access
             button_WOC7.Hide();
             button_WOC8.Hide();
             this.dataGridView1.Hide();
+            button_WOC11.Hide();
+            Select_Excel.Hide();
+
         }
         private void showHome()
         {
@@ -633,6 +648,9 @@ namespace FAST_Access
             button_WOC7.Show();
             button_WOC8.Show();
             this.dataGridView1.Show();
+            button_WOC11.Show();
+            Select_Excel.Show();
+
         }
 
         private void showYourProfile()
@@ -941,7 +959,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select CourseID, CourseName, CourseType,Tpreference,Qpreference,Dpreference,Rpreference,Teacher from course";
+            string CommandText = "select CourseID, CourseName, CourseType, Section,Teacher from course";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -1837,7 +1855,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select course,timing,teacher,room from course_timing where timing LIKE 'Mon%'";
+            string CommandText = "select coursename,timing,teacher,room from course_timing where timing LIKE 'Mon%'";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -1852,7 +1870,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select course,timing,teacher,room from course_timing where timing LIKE '%Tue%'";
+            string CommandText = "select coursename,timing,teacher,room from course_timing where timing LIKE '%Tue%'";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -1867,7 +1885,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select course,timing,teacher,room from course_timing where timing LIKE '%Wed%'";
+            string CommandText = "select coursename,timing,teacher,room from course_timing where timing LIKE '%Wed%'";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -1882,7 +1900,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select course,timing,teacher,room from course_timing where timing LIKE '%Thurs%'";
+            string CommandText = "select coursename,timing,teacher,room from course_timing where timing LIKE '%Thurs%'";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -1897,7 +1915,7 @@ namespace FAST_Access
             SetConnection();
             sqlcon.Open();
             sqlcmd = sqlcon.CreateCommand();
-            string CommandText = "select course,timing,teacher,room from course_timing where timing LIKE '%Fri%'";
+            string CommandText = "select coursename,timing,teacher,room from course_timing where timing LIKE '%Fri%'";
             DB = new SQLiteDataAdapter(CommandText, sqlcon);
             DS.Reset();
             DB.Fill(DS);
@@ -2068,6 +2086,131 @@ namespace FAST_Access
         {
 
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_WOC12_Click(object sender, EventArgs e)
+        {
+            string excelpath = @"C:\Users\ubaid\Desktop\ch.xlsx";
+            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application();
+            Workbook workbook = application.Workbooks.Open(excelpath);
+
+            for(int i = 1; i<= workbook.Sheets.Count; i++)
+            {
+                Worksheet worksheet = workbook.Worksheets[i];
+                int c = 0;
+                int j = 5;
+                int inf = 0;
+                while (c != 100)
+                {
+                    string cellvalue = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 3]).Value;
+                    string cellvaluebelow = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j+1, 3]).Value;
+                    MessageBox.Show(cellvalue);
+                    if (cellvaluebelow == null)
+                    {
+                        MessageBox.Show("Null Value");
+                        string sectionvalue = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 5]).Value;
+                        string teachervalue = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 6]).Value;
+                        string CommandText2 = "Insert into course (CourseName, Section, Teacher) values ('" + cellvalue + "', '" + sectionvalue + "', '" + teachervalue + "' )";
+                        DB1 = new SQLiteDataAdapter(CommandText2, sqlcon);
+                        DS1.Reset();
+                        DB1.Fill(DS1);
+                        j++;
+                        while(cellvaluebelow == null)
+                        {
+                            if(inf == 10)
+                            {
+                                inf = 0;
+                                break;
+                            }
+                            string sectionvalue1 = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 5]).Value;
+                            string teachervalue1 = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 6]).Value;
+                            string CommandText21 = "Insert into course (CourseName, Section, Teacher) values ('" + cellvalue + "', '" + sectionvalue1 + "', '" + teachervalue1 + "' )";
+                            DB1 = new SQLiteDataAdapter(CommandText21, sqlcon);
+                            DS1.Reset();
+                            DB1.Fill(DS1);
+                            j++;
+                            cellvaluebelow = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j + 1, 3]).Value;
+                            inf++;
+                        }
+                    }
+                    else
+                    {
+                        string sectionvalue = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 5]).Value;
+                        string teachervalue = ((Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, 6]).Value;
+                        string CommandText2 = "Insert into course (CourseName, Section, Teacher) values ('" + cellvalue + "', '" + sectionvalue + "', '" + teachervalue + "' )";
+                        //MessageBox.Show(CommandText2);
+                        DB1 = new SQLiteDataAdapter(CommandText2, sqlcon);
+                        DS1.Reset();
+                        DB1.Fill(DS1);
+                        j++;
+                    }
+                    //listBox1.Items.Add(cellvalue);
+                    //MessageBox.Show(c);
+                    c++;
+                }
+                
+            }
+
+            workbook.Close(false, excelpath, null);
+            Marshal.ReleaseComObject(workbook);
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        private void button_WOC11_Click(object sender, EventArgs e)
+        {
+            sqlcon = new SQLiteConnection("Data Source=class_schedule_4.db;Version=3;new=False;Compress=True;");
+            sqlcon.Open();
+            
+            using (sqlcmd = new SQLiteCommand("SELECT * FROM course_timing"))
+            {
+                using (SQLiteDataAdapter sqlda = new SQLiteDataAdapter())
+                {
+                    sqlcmd.Connection = sqlcon;
+                    sqlda.SelectCommand = sqlcmd;
+
+                    using (DataTable dt = new DataTable())
+                    {
+                        sqlda.Fill(dt);
+
+                        using (XLWorkbook wb = new XLWorkbook())
+                        {
+                            string fname = "Desktop/TimeTable.xlsx";
+                            wb.Worksheets.Add(dt, "course_timing");
+                            wb.SaveAs(fname);
+                            MessageBox.Show("Time Table Exported Successfuly");
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void button_WOC12_Click_1(object sender, EventArgs e)
+        {
+            progressBar1.Show();
+            var py = Python.CreateEngine();
+            ICollection<string> searchPaths = py.GetSearchPaths();
+            searchPaths.Add("C:\\Users\\ubaid\\Desktop\\FYP\\venv\\Lib\\site-packages");
+            py.SetSearchPaths(searchPaths);
+            py.ExecuteFile("C:\\Users\\ubaid\\Desktop\\FYP");
+            MessageBox.Show("Please wait while the time-table is being uploaded");
+            bgw.DoWork += new DoWorkEventHandler(bgw_DoWork);
+            bgw.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
+            bgw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw_RunWorkerCompleted);
+            bgw.WorkerReportsProgress = true;
+            bgw.RunWorkerAsync();
         }
     }
 }
